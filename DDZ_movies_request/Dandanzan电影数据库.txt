@@ -1,0 +1,6 @@
+编号（ID） INTEGER(128)
+电影中文名字（ChineseName） VARCHAR(255)
+电影原名（MovieName） VARCHAR(255)
+年代（year） INTEGER(64)
+海报（pic） VARCHAR(255)
+在线观影网址 VARCHAR(255)
