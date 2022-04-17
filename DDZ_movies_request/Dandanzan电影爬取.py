@@ -428,7 +428,8 @@ def DDZ_movies():
 			if newyear == False :
 				conn = ConfigParser
 				reading = conn.read(int)
-				conn.set("ini", "cofig", str(number) + chinese + orig + year)
+				cofig = conn.get('ini', 'cofig')
+				conn.set("ini", "cofig", cofig + str(number) + chinese + orig + year)
 				with open(int, "w+") as f:
 					conn.write(f)
 			else:
