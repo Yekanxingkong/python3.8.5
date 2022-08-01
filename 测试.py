@@ -41,6 +41,34 @@ except:
     ConfigParser = configparser.ConfigParser()
     messagebox = tkinter.messagebox
 
+getcwd = os.getcwd() + "\\"
+list = os.listdir(getcwd)
+a = os.walk(getcwd)
+for x,n,m in a:
+    for j in m:
+        print(os.path.join(x,j))
+print("------------------------------------")
+g = os.walk('C:\\Users\\Administrator\\Desktop\\python3.8.5')
+for path,dir_list,file_list in g:
+    for dir_name in dir_list:
+        pass
+        #print(os.path.join(path, dir_name) )
+def at():
+    for loopA in list:
+        print('检查文件的类型，是否为文件夹')
+        print('检查文件的大小属性')
+        print('读取视频文件，保存信息')
+    print(list)
+    print(os.path.split( os.path.realpath( sys.argv[0] ) )[0])
+
+def iffile(path):
+    if os.path.isdir(path):
+        print("it's a directory")
+    elif os.path.isfile(path):
+        print("it's a normal file")
+    else:
+        print("it's a special file(socket,FIFO,device file)")
+
 
 if __name__ == '__main__':
     sys = platform.system()
