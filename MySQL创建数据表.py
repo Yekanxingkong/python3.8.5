@@ -1,4 +1,4 @@
-import pymssql
+﻿import pymssql
 import pyodbc
 import os
 import mysql.connector
