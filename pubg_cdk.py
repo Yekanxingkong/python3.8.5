@@ -59,6 +59,7 @@ def New_db(hosturl,youruesnames,yourpassword,SQLname):
             new_db_SQLname = True
         else:
             pass
+        #print(x)
     if(new_db_SQLname == False):
         mycursor.execute("CREATE DATABASE " + SQLname)
         return 1
@@ -74,10 +75,10 @@ def Del_db(hosturl,youruesnames,yourpassword,SQLname):
     )
     mycursor = mydb.cursor()
     mycursor.execute("SHOW DATABASES")
-    del_db_SQLname = False
+    del_db_SQLname = True
     for (x,) in mycursor:
         if(x == SQLname):
-            del_db_SQLname = True
+            del_db_SQLname = False
         else:
             pass
     if(new_db_SQLname == True):
@@ -94,14 +95,17 @@ def New_execute(hosturl,youruesnames,yourpassword,SQLname,customers,Sqlcommand):
         passwd=yourpassword,
         database=SQLname
     )
-    mycursor = mydb.cursor()
-    mycursor.execute("SHOW TABLES")
-    cus_tile = False
-    for (x,) in mycursor:
-        if (x == customers):
-            cus_tile = True
-        else:
-            pass
+    cus_tile = True
+    try:
+        mycursor = mydb.cursor()
+        mycursor.execute("SHOW TABLES")
+        for (x,) in mycursor:
+            if (x == customers):
+                cus_tile = False
+            else:
+                pass
+    except:
+        print("请单独创建表")
     if (cus_tile == True):
         mycursor.execute("CREATE TABLE " + customers + " (" + Sqlcommand + ")")
         return 1
@@ -125,11 +129,13 @@ def INTO_execute(hosturl,youruesnames,yourpassword,SQLname,customers,Sqlcommand)
 	mycursor = mydb.cursor()
 	mycursor.execute(Sqlcommand)
 	mydb.commit()
-	print(mycursor.rowcount, "record inserted.")
+	#print(mycursor.rowcount, "record inserted.")
 
 def into_cdk():
     num = string.ascii_letters + string.digits
     cdk = "HKTB" + "".join(random.sample(num, 32))
+    file = open('C:/Users/Administrator/Desktop/b.txt', 'a')
+    file.write(cdk)
     return cdk
 
 
@@ -137,7 +143,7 @@ def into_cdk():
 
 def main(cdk):
     try:
-        hosturl,youruesnames,yourpassword,sqlname,customers = "192.168.2.175","root","123456","数据库名称","表名称"
+        hosturl,youruesnames,yourpassword,SQLname,customers = "192.168.2.175","root","123456","CDK","PUBGcdk"
         if(New_db(hosturl,youruesnames,yourpassword,SQLname) == 1):
             print("已创建数据库：" + SQLname)
         else:
@@ -150,11 +156,9 @@ def main(cdk):
     except:
         print("Database connection failed, please check the server!!!")
         sys.exit(0)
-    #for loopA in range(100):
-    #   Sqlcommand = "INSERT INTO " + customers + " (序号,PUBG_CKD,状态) VALUES ('"+ loopA +"','"+ cdk +"','Ture')"
-    #   mydb.commit()
-
-
+    #for loopA in range(500):
+    #    Sqlcommand = "INSERT INTO " + customers + " (序号,PUBG_CKD,状态) VALUES ('"+ str(loopA) +"','"+ into_cdk() +"','Ture')"
+    #    INTO_execute(hosturl, youruesnames, yourpassword, SQLname, customers, Sqlcommand)
     #查询数据
     mydb = mysql.connector.connect(
         host=hosturl,
@@ -163,17 +167,26 @@ def main(cdk):
         database=SQLname
     )
     mycursor = mydb.cursor()
-    Sqlcommand = "SELECT PUBG_CKD FROM " + customers
+    #sql_revise = "UPDATE " + customers + " SET 状态 = 'Ture' WHERE PUBG_CKD = '" + cdk + "' "
+    #mycursor.execute(sql_revise)
+    #mydb.commit()
+
+    Sqlcommand = "SELECT 序号 FROM " + customers + " WHERE PUBG_CKD='" + cdk + "' AND 状态='Ture'"
     mycursor.execute(Sqlcommand)
     for (x,) in mycursor:
-        if(x == cdk):
-            sql_revise = "UPDATE Person SET 状态 = 'Flase' WHERE PUBG_CKD = '"+ cdk +"' "
-            mycursor.execute(sql_revise)
-            mydb.commit()
-            return 1
-        else:
-            pass
+        print(x)
+        for loopA in range(500):
+            if(int(x) == loopA):
+                print(x)
+                sql_revise = "UPDATE " + customers + " SET 状态 = 'Flase' WHERE PUBG_CKD = '" + cdk + "' "
+                mycursor.execute(sql_revise)
+                mydb.commit()
+                return 1
+            else:
+                pass
+    print("not cdk")
     return 0
+
 
 
 
@@ -182,8 +195,6 @@ if __name__ == '__main__':
     sys = platform.system()
     if sys == "Windows":
         print("OS is Windows!!!")
-        for loopA in range(10):
-            print(into_cdk())
     elif sys == "Linux":
         print("OS is Linux!!!")
     else:
